@@ -30,20 +30,6 @@ volumes that will be mounted for persistent data.  See the ***Environment
 variables*** section below.
 
 
-## Examples of usage
-
-See the examples/ directory for examples of how to use this image.
-
- * ***streaming***: The remote database server streams its WAL logs to barman.
-   This reduces the "Recovery Point Objective (RPO)" to nearly 0.  RPO is the
-   "maximum amount of data you can afford to lose."<sup>[1](#barman_docs)</sup>
-   This example also sets up  a weekly cron job to take incremental base backups
-   using rsync.  This helps reduce the time that would be required to play back
-   the WAL files in a disaster recovery situation.
-
-Currently only streaming of WAL logs is supported.  Using postgres's
-`archive_command` functionality is not supported at this time.
-
 ## Environment variables
 
 The following environment variables may be set when starting the container:
@@ -70,7 +56,16 @@ The following environment variables may be set when starting the container:
 
 | Path                     | Description                                                                      |
 |--------------------------|----------------------------------------------------------------------------------|
-| /home/barman/.ssh/id_rsa | The private ssh key that barman will use to connect to remote host when recovery |
+| BARMAN_DATA_DIR |  The location where data files can be stored.  Defaults to `/var/lib/barman`. |
+
+## CRON JOBS
+1. the `barman cron` will run on every minite to executes WAL archiving operations concurrently on a server basis, and this also enforces retention policies
+2. the `barman backup` will run on `BARMAN_BACKUP_SCHEDULE` to take a full backup (base backup) of a given server.
+
+## How to Recover a Master Cluster?
+follow [Barman Documentation](https://docs.pgbarman.org/release/2.1/#recover)
+1.  run Remote recovery allow Barman to execute the copy on a remote server, using the provided command to connect to the remote host. (this requires ssh setup, TBD)
+2. Start a new postgres cluster with backup data
 
 ## Footnotes:
 
