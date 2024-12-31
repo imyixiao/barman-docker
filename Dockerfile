@@ -22,7 +22,7 @@ ENV \
 	BARMAN_LOG_DIR=/var/log/barman \
 	BARMAN_SSH_KEY_DIR=/private/ssh \
     BARMAN_CRON_SCHEDULE="* * * * *" \
-    BARMAN_BACKUP_SCHEDULE="30 2 * * *" \
+    BARMAN_BACKUP_SCHEDULE="30 2 1 * *" \
     BARMAN_LOG_LEVEL=DEBUG \
     DB_HOST=host.docker.internal \
     DB_PORT=5432 \
@@ -33,6 +33,7 @@ ENV \
     DB_REPLICATION_PASSWORD=postgres \
     DB_SLOT_NAME=barman \
     DB_BACKUP_METHOD=postgres \
+    RETENTION_POLICY=RECOVERY WINDOW of 3 MONTHS\
 VOLUME ${BARMAN_DATA_DIR}
 
 # COPY install_barman.sh /tmp/

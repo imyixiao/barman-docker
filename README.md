@@ -50,9 +50,8 @@ The following environment variables may be set when starting the container:
 
 | Name                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | ----                               | -----------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| BARMAN_CRON_SRC                    | This directory holds files that will be copied in to `/etc/cron.d/` and have the correct permissions set so that they will be run via cron.  This can be used as a place to put cron jobs for performing regular basebackups.  Defaults to `/private/cron.d`.
-| BARMAN_LOG_DIR                     | The location where log files can be stored.  For example, a cron job can be set up to take regular full backups and that can send its logs here.  Defaults to `/var/log/barman`.                                                                                                                                                                                                                                                                                                                                                                        |
-| BARMAN_SSH_KEY_DIR                 | This directory in the container (most likely mounted as a volume) should contain SSH private key files that are used when connecting via SSH to the database servers that you're backing up.  This happens if the `backup_method` defined in the barman config for the server is set to `rsync`.  The `ssh_command` for that server should include `-i /home/barman/.ssh/<private_key_filename>`.  Note that the keys are copied from this directory to /home/barman/.ssh/ to ensure ownership/permissions are properly set.  Defaults to /private/ssh. |
+| BARMAN_LOG_DIR                     | The location where log files can be stored.  For example, a cron job can be set up to take regular full backups and that can send its logs here.  Defaults to `/var/log/barman`.
+| BARMAN_DATA_DIR                     | The location where data files can be stored.  Defaults to `/var/lib/barman`.                                                                                                
 | BARMAN_CRON_SCHEDULE               | `* * * * *`, barman cron running scheduel
 | BARMAN_BACKUP_SCHEDULE             | `0 4 * * *`, barman backup running schedule
 | BARMAN_LOG_LEVEL                   | `INFO`, barman log level
@@ -65,6 +64,7 @@ The following environment variables may be set when starting the container:
 | DB_REPLICATION_PASSWORD            | `standby`, replication user password
 | DB_SLOT_NAME                       | `barman`, postgres replication slot name for barman
 | DB_BACKUP_METHOD                   | `postgres`, barman backup method, see barman backup
+| RETENTION_POLICY                   | `RECOVERY WINDOW of 3 MONTHS` A backup retention policy is a user-defined policy that determines how long backups and related archive logs (Write Ahead Log segments) need to be retained for recovery procedures.
 
 ## Volumes
 
