@@ -1,5 +1,6 @@
-version: '2'
+version: '1'
 services:
   barman:
-    image: tbeadle/barman:2.1
     build: .
+    # for local testing only
+    network_mode: "host"

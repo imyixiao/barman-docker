@@ -27,14 +27,6 @@ but you will likely want to create your own `docker-compose.yml` file to define
 volumes that will be mounted for persistent data.  See the ***Environment
 variables*** section below.
 
-The barman program is run inside the container as the `barman` user.  If you
-enter a shell in the container and want to run barman commands, make sure to run
-them as the `barman` user using `gosu barman <barman command>`.  For example:
-
-```
-gosu barman barman check all
-gosu barman barman backup all
-```
 
 ## Examples of usage
 
