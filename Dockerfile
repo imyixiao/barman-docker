@@ -36,15 +36,9 @@ ENV \
     RETENTION_POLICY="RECOVERY WINDOW of 3 MONTHS" 
 VOLUME ${BARMAN_DATA_DIR}
 
-# COPY install_barman.sh /tmp/
-# RUN /tmp/install_barman.sh && rm /tmp/install_barman.sh
 COPY barman.conf.template /etc/barman.conf.template
 COPY pg.conf.template /etc/barman/barman.d/pg.conf.template
 
-# # Install the entrypoint script.  It will set up ssh-related things and then run
-# # the CMD which, by default, starts cron.  The 'barman -q cron' job will get
-# # pg_receivexlog running.  Cron may also have jobs installed to run
-# # 'barman backup' periodically.
 COPY entrypoint.sh /
 ENTRYPOINT ["bash", "/entrypoint.sh"]
 CMD ["cron", "-L", "4",  "-f"]
