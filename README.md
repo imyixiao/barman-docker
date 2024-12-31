@@ -1,5 +1,7 @@
 # docker-barman
 
+The repo clones https://hub.docker.com/r/tbeadle/postgres/
+
 This repo contains files used to build a [docker](https://www.docker.com) image
 for running [BaRMan](https://github.com/2ndquadrant-it/barman), the "Backup and
 Recovery Manager for PostgreSQL."
